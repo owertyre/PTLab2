@@ -4,23 +4,48 @@
     <meta name="viewport" content="width=device-width" />
     <title>Товары</title>
 </head>
-<body>
+<body onload="Func()">
+
     <div>
         <h3>Список</h3>
-        <table>
+        <table id="table">
             <tr>
                 <td><p>Наименование</p></td>
                 <td><p>Цена</p></td>
+                <td><p>Количество на складе</p></td>
                 <td></td>
             </tr>
             {% for p in products %}
                 <tr>
                     <td><p>{{ p.name }}</p></td>
                     <td><p>{{ p.price }}</p></td>
-                    <td><p><a href="/buy/{{ p.id }}">Купить</a></p></td>
+                    <td><p id="but{{p.id}}">{{ p.count }}</p></td>
+
+                    <td><p><button  onclick="document.location='/buy/{{ p.id }}'" id="{{p.id}}">Купить</button></p></td>
                 </tr>
             {% endfor %}
         </table>
     </div>
 </body>
+<script>
+function Func(){
+console.log("проверка");
+var t = document.getElementById('table');
+var tra = t.children;
+var trs = tra[0].children;
+var tds = null;
+var sum = 0;
+
+for (var i=1; i<trs.length; i++) {
+tds=trs[i].children;
+if (tds[2].children[0].innerText<=0) {
+tds[3].children[0].children[0].disabled=true;
+}
+console.log(tds[2].children[0].innerText);
+
+}
+
+
+}
+</script>
 </html>
